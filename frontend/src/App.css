@@ -1,42 +1,135 @@
-#root {
-  max-width: 1280px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+}
+
+.landing {
+  min-height: 100vh;
+  background-image: url("./assets/hallstatt-3609863_640-Picsart-AiImageEnhancer.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Default style when inside landing */
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.nav.default {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.nav.scrolled {
+  background: #ffffff;
+  color: black;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  font-size: 24px;
+  font-weight: bold;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.nav ul li {
+  cursor: pointer;
+  color: inherit;
+  transition: color 0.3s ease;
 }
 
-.card {
-  padding: 2em;
+.lang-switch span {
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 10px;
+  color: inherit;
 }
 
-.read-the-docs {
-  color: #888;
+.lang-switch .active {
+  background: white;
+  color: black;
+}
+
+.hero {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  max-width: 90%;
+}
+
+.hero h1 {
+  max-width: 650px;
+  font-size: 48px;
+  font-weight: 900;
+}
+
+.hero h2 {
+  font-size: 36px;
+  margin: 20px 0;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.p-text {
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 23px;
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+button.primary {
+  background-color: #6b38b0;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 24px;
+  cursor: pointer;
 }
