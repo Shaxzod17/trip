@@ -1,17 +1,50 @@
 import './App.css'
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import TourImg from "./assets/image.jpg"
 import TourLogo from "./assets/tourLogo.png"
 
 function App() {
     const [navScrolled, setNavScrolled] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
     const landingRef = useRef(null);
+    const navigate = useNavigate();
+    const location = useLocation();
     const timelineEvents = [
         { year: "2022", description: "Лучшая турфирма года", side: "left" },
         { year: "2023", description: "Лидер в организации путешествий", side: "right" },
         { year: "2024", description: "Лидер UZfranchise", side: "left" },
     ];
+
+    const services = [
+        {
+            icon: "pi pi-check-square",
+            title: "Виды путешествий",
+            description: "Быстро и легко организуемые путешествия в любую точку мира",
+        },
+        {
+            icon: "pi pi-check-square",
+            title: "Транспортные услуги",
+            description: "Авиабилеты, групповые поездки на автобусах и микроавтобусах",
+        },
+        {
+            icon: "pi pi-check-square",
+            title: "Проживание",
+            description: "Бронирование отелей, курортов и гостевых домов",
+        },
+        {
+            icon: "pi pi-check-square",
+            title: "Визы и документы",
+            description: "Подготовка необходимых документов для международных путешествий",
+        },
+        {
+            icon: "pi pi-check-square",
+            title: "Страхование путешествий",
+            description: "Страховые услуги для обеспечения безопасности во время путешествия",
+        },
+    ];
+
 
 
     useEffect(() => {
@@ -29,22 +62,42 @@ function App() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const scrollToSection = (id) => {
+        navigate(`#${id}`);
+        setTimeout(() => {
+            const section = document.getElementById(id);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 0);
+    };
+
+
     return (
         <div className="wrapper">
             <div className="landing" ref={landingRef}>
                 <header className={`nav ${navScrolled ? 'scrolled' : 'default'}`}>
                     <div className="logo">EXP.WORLD</div>
-                    <nav>
+                    <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+                        {menuOpen ? (
+                            <span className="close-icon"><i className="pi pi-times" style={{ textAlign: 'center' }}></i></span>
+                        ) : (
+                            <>
+                                <span className="bar"></span>
+                                <span className="bar"></span>
+                                <span className="bar"></span>
+                            </>
+                        )}
+                    </div>
+                    <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
                         <ul>
-                            <li>Горящие туры</li>
-                            <li>Оплата</li>
-                            <li>О нас</li>
-                            <li>Услуги</li>
-                            <li>Направления</li>
-                            <li>Учебный центр</li>
-                            <li>Контакты</li>
+                            <li onClick={() => { scrollToSection('tours'); setMenuOpen(false); }}>Горящие туры</li>
+                            <li onClick={() => { scrollToSection('aboutUs'); setMenuOpen(false); }}>О нас</li>
+                            <li onClick={() => { scrollToSection('services'); setMenuOpen(false); }}>Услуги</li>
+                            <li onClick={() => { scrollToSection('footer'); setMenuOpen(false); }}>Контакты</li>
                         </ul>
                     </nav>
+
                     <div className="lang-switch">
                         <span>UZ</span>
                         <span className="active">RU</span>
@@ -66,7 +119,7 @@ function App() {
 
 
 
-            <div className="tours">
+            <div className="tours" id="tours">
                 <h2 className="tours-title">Горящие туры</h2>
                 <div className="blue-line"></div>
                 <p className="tours-subtitle">Специальные предложения по лучшим ценам</p>
@@ -126,7 +179,9 @@ function App() {
             </div>
 
 
-            <div className="aboutUs">
+            <div className="aboutUs" id="aboutUs">
+                <h2 className="about-title">О нас</h2>
+                <div className="blue-line"></div>
                 <div className="history-header">
                     <img src={TourLogo} alt="Trip Tour Logo" className="history-logo" />
                     <p>
@@ -161,6 +216,63 @@ function App() {
                 </div>
             </div>
 
+            <div className="services" id="services">
+                <h2 className="service-title">Наши услуги</h2>
+                <div className="blue-line"></div>
+                <p className="service-subtitle">
+                    Организация путешествий, планирование туристических туров и транспортные услуги
+                </p>
+
+                <div className="service-cards">
+                    {services.map((service, index) => (
+                        <div key={index} className="service-card">
+                            <i className={service.icon}></i>
+                            <h3>{service.title}</h3>
+                            <p>{service.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <footer className="footer" id="footer">
+                <div className="footer-container">
+                    <div className="footer-section">
+                        <img src={TourLogo} alt="TripTour Logo" className="footer-logo" />
+                        <p>р. Узбекистан, г. Не знаю, 0</p>
+                    </div>
+
+                    <div className="footer-section">
+                        <h4>Компания</h4>
+                        <ul>
+                            <li>Оплата</li>
+                            <li>О нас</li>
+                            <li>Филиалы</li>
+                            <li>Политика конфиденциальности</li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-section">
+                        <h4>Контакты</h4>
+                        <ul>
+                            <li><i className="pi pi-phone" style={{ textAlign: 'center', marginRight:"10px" }}></i> +998999999999</li>
+                            <li><i className="pi pi-envelope" style={{ textAlign: 'center', marginRight:"10px" }}></i> companyname.uz@gmail.com</li>
+                        </ul>
+                    </div>
+
+                    <div className="footer-section">
+                        <h4>Социальные сети</h4>
+                        <div className="social-icons">
+                            <i className="pi pi-facebook" style={{ textAlign: 'center' }}></i>
+                            <i className="pi pi-instagram" style={{ textAlign: 'center' }}></i>
+                            <i className="pi pi-telegram" style={{ textAlign: 'center' }}></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="footer-bottom">
+                    © 2025 EXP.WORLD. Все права защищены
+                </div>
+            </footer>
 
         </div>
     );
