@@ -11,11 +11,30 @@ function App() {
     const landingRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const [selectedTour, setSelectedTour] = useState(null);
+
     const timelineEvents = [
         { year: "2022", description: "Лучшая турфирма года", side: "left" },
         { year: "2023", description: "Лидер в организации путешествий", side: "right" },
         { year: "2024", description: "Лидер UZfranchise", side: "left" },
     ];
+
+    const tours = [
+        { country: "BAA", price: 344, image: TourImg },
+        { country: "NYACHANG", price: 390, image: TourImg },
+        { country: "Qatar", price: 353, image: TourImg },
+        { country: "Uzbekistan", price: 199, image: TourImg },
+        { country: "Spain", price: 699, image: TourImg },
+        { country: "Italy", price: 559, image: TourImg }
+    ];
+
+    const openModal = (tour) => {
+        setSelectedTour(tour);
+    };
+
+    const closeModal = () => {
+        setSelectedTour(null);
+    };
 
     const services = [
         {
@@ -125,38 +144,7 @@ function App() {
                 <p className="tours-subtitle">Специальные предложения по лучшим ценам</p>
 
                 <div className="tour-cards">
-                    {[
-                        {
-                            country: "BAA",
-                            price: 344,
-                            image: TourImg
-                        },
-                        {
-                            country: "NYACHANG",
-                            price: 390,
-                            image: TourImg
-                        },
-                        {
-                            country: "Qatar",
-                            price: 353,
-                            image: TourImg
-                        },
-                        {
-                            country: "Uzbekistan",
-                            price: 199,
-                            image: TourImg
-                        },
-                        {
-                            country: "Spain",
-                            price: 699,
-                            image: TourImg
-                        },
-                        {
-                            country: "Italy",
-                            price: 559,
-                            image: TourImg
-                        }
-                    ].map((tour, index) => (
+                    {tours.map((tour, index) => (
                         <div key={index} className="tour-card">
                             <div className="tour-image-wrapper">
                                 <img src={tour.image} alt={tour.country} className="tour-image" />
@@ -164,18 +152,44 @@ function App() {
                             </div>
                             <div className="tour-info">
                                 <p>Страна: {tour.country}</p>
-                                <p>Отель: 3 <i className="pi pi-star-fill" style={{ textAlign: 'center', fontSize:"14px" }}></i></p>
+                                <p>Отель: 3 <i className="pi pi-star-fill" style={{ fontSize: "14px" }}></i></p>
                                 <p>Длительность: 8 дней</p>
                                 <p>Питание: Nonushta</p>
                                 <h3>{tour.price} $</h3>
                                 <div className="tour-buttons">
-                                    <button className="primary"><i className="pi pi-pencil" style={{ textAlign: 'center' }}></i> Оставить заявку</button>
-                                    <button className="secondary"><i className="pi pi-phone" style={{ textAlign: 'center' }}></i> Позвонить</button>
+                                    <button className="primary" onClick={() => openModal(tour)}>
+                                        <i className="pi pi-pencil" style={{ textAlign: 'center' }}></i> Оставить заявку
+                                    </button>
+                                    <button className="secondary">
+                                        <i className="pi pi-phone" style={{ textAlign: 'center' }}></i> Позвонить
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
+
+                {selectedTour && (
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <button className="modal-close" onClick={closeModal}>×</button>
+                            <div className="modal-tour-info">
+                                <p><i className="pi pi-map-marker"></i> Выбранный тур <strong>${selectedTour.price}</strong></p>
+                                <h3>{selectedTour.country}</h3>
+                            </div>
+                            <div className="modal-form">
+                                <input type="text" placeholder="Ваше имя"/>
+                                <input type="tel" placeholder="Ваш номер телефона" />
+                                <textarea placeholder="Ваше сообщение"></textarea>
+                                <button className="submit-btn">Отправить</button>
+                            </div>
+                            <div className="modal-phone">
+                                <p>Или позвоните нам</p>
+                                <a href="tel:+998785557788">+99899999999</a>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
 
 
