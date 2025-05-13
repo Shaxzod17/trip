@@ -1,0 +1,92 @@
+.admin-add-tour {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin-add-tour h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.add-tour-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-tour-form input,
+.add-tour-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.add-tour-form textarea {
+    min-height: 80px;
+}
+
+.add-tour-form label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+.submit-btn {
+    padding: 0.8rem;
+    background-color: #0077cc;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #005fa3;
+}
+
+.message {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: #e0ffe0;
+    color: #2d7a2d;
+}
+
+/* Table Styles */
+.admin-add-tour table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-add-tour th,
+.admin-add-tour td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.admin-add-tour th {
+    background-color: #0077cc;
+    color: white;
+}
+
+.admin-add-tour tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
