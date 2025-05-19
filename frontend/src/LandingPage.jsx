@@ -4,12 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import 'primeicons/primeicons.css';
 import TourImg from "./assets/image.jpg";
 import TourLogo from "./assets/tourLogo.png";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function LandingPage() {
     const [navScrolled, setNavScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [tours, setTours] = useState([]);
     const [selectedTour, setSelectedTour] = useState(null);
+    const [fullName, setFullName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [message, setMessage] = useState('');
     const landingRef = useRef(null);
     const navigate = useNavigate();
 
@@ -37,6 +43,40 @@ function LandingPage() {
             if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 0);
     };
+
+    const handleTourRequestSubmit = () => {
+        if (!selectedTour) return;
+
+        const payload = {
+            tour: selectedTour.id,
+            full_name: fullName,
+            phone_number: phoneNumber,
+            message: message,
+        };
+
+        fetch("/api/v1/tour_request/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        })
+            .then((res) => {
+                if (!res.ok) throw new Error("Ошибка при отправке запроса");
+                return res.json();
+            })
+            .then((data) => {
+                toast.success("Заявка успешно отправлена!");
+                setSelectedTour(null);
+                setFullName('');
+                setPhoneNumber('');
+                setMessage('');
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error("Ошибка при отправке. Попробуйте снова.");
+            });
+    };
+
+
 
     const services = [
         {
@@ -74,7 +114,9 @@ function LandingPage() {
 
     return (
         <div className="wrapper">
-            {/* Header + Hero */}
+            <ToastContainer
+            autoClose={1500}
+            />
             <div className="landing" ref={landingRef}>
                 <header className={`nav ${navScrolled ? 'scrolled' : 'default'}`}>
                     <div className="logo">EXP.WORLD</div>
@@ -156,10 +198,26 @@ function LandingPage() {
                                 <h3>{selectedTour.country}</h3>
                             </div>
                             <div className="modal-form">
-                                <input type="text" placeholder="Ваше имя" />
-                                <input type="tel" placeholder="Ваш номер телефона" />
-                                <textarea placeholder="Ваше сообщение"></textarea>
-                                <button className="submit-btn">Отправить</button>
+                                <input
+                                    type="text"
+                                    placeholder="Ваше имя"
+                                    value={fullName}
+                                    onChange={(e) => setFullName(e.target.value)}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Ваш номер телефона"
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                />
+                                <textarea
+                                    placeholder="Ваше сообщение"
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                ></textarea>
+                                <button className="submit-btn" onClick={handleTourRequestSubmit}>
+                                    Отправить
+                                </button>
                             </div>
                             <div className="modal-phone">
                                 <p>Или позвоните нам</p>
