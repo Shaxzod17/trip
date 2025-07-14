@@ -20,7 +20,7 @@ function LandingPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("/api/v1/tours/list")
+        fetch("http://localhost:8080/api/tour/get")
             .then((res) => res.json())
             .then((data) => setTours(data))
             .catch((err) => console.error("Ошибка при загрузке туров:", err));
@@ -54,7 +54,7 @@ function LandingPage() {
             message: message,
         };
 
-        fetch("/api/v1/tour_request/create", {
+        fetch("http://localhost:8080/api/tour/create", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),

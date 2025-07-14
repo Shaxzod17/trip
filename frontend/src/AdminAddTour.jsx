@@ -9,7 +9,6 @@ function AdminAddTour() {
         meals: "",
         price: "",
         image: "",
-        servises: "",
         hot: false
     });
 
@@ -18,7 +17,7 @@ function AdminAddTour() {
 
     const fetchTours = async () => {
         try {
-            const response = await fetch("/api/v1/tours/list");
+            const response = await fetch("http://localhost:8080/api/tour/get");
             const data = await response.json();
             setTours(data);
         } catch (error) {
@@ -37,7 +36,7 @@ function AdminAddTour() {
         if (type === "checkbox") {
             newValue = checked;
         } else if (type === "file") {
-            newValue = files[0]; // Store the File object
+            newValue = files[0];
         } else {
             newValue = value;
         }
@@ -51,18 +50,17 @@ function AdminAddTour() {
 
         const formPayload = new FormData();
         formPayload.append("country", formData.country);
-        formPayload.append("duration", parseInt(formData.duration)); // make sure it's an integer
+        formPayload.append("duration", parseInt(formData.duration));
         formPayload.append("hotel", formData.hotel);
         formPayload.append("meals", formData.meals);
-        formPayload.append("price", parseFloat(formData.price)); // ensure it's float
-        formPayload.append("servises", formData.servises);
-        formPayload.append("hot", formData.hot ? "true" : "false"); // string boolean
+        formPayload.append("price", parseFloat(formData.price));
+        formPayload.append("hot", formData.hot ? "true" : "false");
         if (formData.image) {
             formPayload.append("image", formData.image);
         }
 
         try {
-            const response = await fetch("/api/v1/tour_request/create", {
+            const response = await fetch("http://localhost:8080/api/tour/create", {
                 method: "POST",
                 body: formPayload
             });
@@ -71,13 +69,12 @@ function AdminAddTour() {
                 setMessage("✅ Тур успешно добавлен!");
                 setFormData({
                     country: "",
-                    duration: "",
                     hotel: "",
+                    duration: "",
                     meals: "",
                     price: "",
                     image: "",
-                    servises: "",
-                    hot: false,
+                    hot: true,
                 });
                 fetchTours();
             } else {
@@ -96,11 +93,10 @@ function AdminAddTour() {
             <form onSubmit={handleSubmit} className="add-tour-form">
                 <input name="country" type="text" placeholder="Страна" value={formData.country} onChange={handleChange} required />
                 <input name="duration" type="number" placeholder="Длительность (в днях)" value={formData.duration} onChange={handleChange} required />
-                <input name="hotel" type="text" placeholder="Отель" value={formData.hotel} onChange={handleChange} required />
+                <input name="hotel" type="number" placeholder="Отель" value={formData.hotel} onChange={handleChange} required />
                 <input name="meals" type="text" placeholder="Питание" value={formData.meals} onChange={handleChange} required />
                 <input name="price" type="number" placeholder="Цена" value={formData.price} onChange={handleChange} required />
                 <input name="image" type="file" onChange={handleChange} />
-                <textarea name="servises" placeholder="Сервисы" value={formData.servises} onChange={handleChange}></textarea>
                 <label>
                     <input type="checkbox" name="hot" checked={formData.hot} onChange={handleChange} />
                     Горящий тур?
@@ -119,8 +115,7 @@ function AdminAddTour() {
                     <th>Отель</th>
                     <th>Питание</th>
                     <th>Цена</th>
-                    <th>Сервисы</th>
-                    <th>Горящий?</th>
+                    <th>Горячий</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -132,8 +127,7 @@ function AdminAddTour() {
                         <td>{tour.hotel}</td>
                         <td>{tour.meals}</td>
                         <td>{tour.price}$</td>
-                        <td>{tour.servises}</td>
-                        <td>{tour.hot ? "Да" : "Нет"}</td>
+                        <td>{tour.hot ? "✅" : "❌"}</td>
                     </tr>
                 ))}
                 </tbody>

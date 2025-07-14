@@ -11,7 +11,7 @@
 
 .landing {
   min-height: 100vh;
-  background-image: url("./assets/hallstatt-3609863_640-Picsart-AiImageEnhancer.jpg");
+  background-image: url("./assets/photo-1506744038136-46273834b3fb.jpg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -47,6 +47,7 @@
 }
 
 .logo {
+  color: #62d7ff;
   font-size: 24px;
   font-weight: bold;
 }
@@ -61,6 +62,7 @@
   cursor: pointer;
   color: inherit;
   transition: color 0.3s ease;
+  font-size: 25px;
 }
 
 .lang-switch {
@@ -81,8 +83,7 @@
 }
 
 .lang-switch .active {
-  background: white;
-  color: black;
+  background: #62d7ff;
 }
 
 @media (max-width: 755px) {
