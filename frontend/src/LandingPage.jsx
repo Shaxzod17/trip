@@ -18,6 +18,8 @@ function LandingPage() {
     const [message, setMessage] = useState('');
     const landingRef = useRef(null);
     const navigate = useNavigate();
+    const [showPhoneModal, setShowPhoneModal] = useState(false);
+
 
     useEffect(() => {
         fetch("http://localhost:8080/api/tour/get")
@@ -54,7 +56,7 @@ function LandingPage() {
             message: message,
         };
 
-        fetch("http://localhost:8080/api/tour/create", {
+        fetch("http://localhost:8080/api/request", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
@@ -152,8 +154,8 @@ function LandingPage() {
                     <p className="p-text">Качественные и надежные туристические услуги с 2024 года</p>
                     <h2>+998 99 999 99 99 </h2>
                     <div className="buttons">
-                        <button className="primary">Планировать путешествие</button>
-                        <button className="secondary">Контакты</button>
+                        <button onClick={() => scrollToSection('tours')} className="primary">Планировать путешествие</button>
+                        <button onClick={() => setShowPhoneModal(true)} className="secondary">Контакты</button>
                     </div>
                 </div>
             </div>
@@ -180,7 +182,7 @@ function LandingPage() {
                                     <button className="primary" onClick={() => setSelectedTour(tour)}>
                                         <i className="pi pi-pencil" /> Оставить заявку
                                     </button>
-                                    <button className="secondary">
+                                    <button className="secondary" onClick={() => setShowPhoneModal(true)}>
                                         <i className="pi pi-phone" /> Позвонить
                                     </button>
                                 </div>
@@ -188,6 +190,18 @@ function LandingPage() {
                         </div>
                     ))}
                 </div>
+
+                {showPhoneModal && (
+                    <div className="modal-overlay">
+                        <div className="phone-modal">
+                            <button className="modal-close" onClick={() => setShowPhoneModal(false)}>×</button>
+                            <h3>Свяжитесь с нами</h3>
+                            <p>Телефон:</p>
+                            <a className="phone-link" href="tel:+99899999999">+998 99 999 99 99</a>
+                        </div>
+                    </div>
+                )}
+
 
                 {selectedTour && (
                     <div className="modal-overlay">

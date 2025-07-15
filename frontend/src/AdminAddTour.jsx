@@ -96,7 +96,24 @@ function AdminAddTour() {
                 <input name="hotel" type="number" placeholder="Отель" value={formData.hotel} onChange={handleChange} required />
                 <input name="meals" type="text" placeholder="Питание" value={formData.meals} onChange={handleChange} required />
                 <input name="price" type="number" placeholder="Цена" value={formData.price} onChange={handleChange} required />
-                <input name="image" type="file" onChange={handleChange} />
+                <div className="file-upload-wrapper">
+                    <label htmlFor="file-upload" className="custom-upload-btn">
+                        Выбрать файл
+                    </label>
+                    <input
+                        id="file-upload"
+                        name="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleChange}
+                        className="hidden-upload"
+                    />
+                    <span className="file-chosen">
+                        {formData.image?.name || "Файл не выбран"}
+                    </span>
+                </div>
+
+
                 <label>
                     <input type="checkbox" name="hot" checked={formData.hot} onChange={handleChange} />
                     Горящий тур?
