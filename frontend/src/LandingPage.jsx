@@ -2,8 +2,8 @@ import './App.css';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'primeicons/primeicons.css';
-import TourImg from "./assets/image.jpg";
-import TourLogo from "./assets/tourLogo.png";
+import TourImg from "../public/assets/image.jpg";
+import TourLogo from "../public/assets/tourLogo.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

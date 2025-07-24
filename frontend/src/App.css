@@ -11,7 +11,7 @@
 
 .landing {
   min-height: 100vh;
-  background-image: url("./assets/photo-1506744038136-46273834b3fb.jpg");
+  background-image: url("../public/assets/photo-1506744038136-46273834b3fb.jpg");
   background-size: cover;
   background-position: center;
   color: white;
